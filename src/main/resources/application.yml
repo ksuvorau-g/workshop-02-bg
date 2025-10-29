@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: exchange-rates-service
+  
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:exchangerates}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+
+exchange:
+  rates:
+    base:
+      currency: EUR
+    fetch:
+      interval: 3600000  # 1 hour in milliseconds
+    fixer:
+      api:
+        key: ${FIXER_API_KEY:}
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.workshop.exchangerates: INFO
+    org.springframework: INFO

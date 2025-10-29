@@ -1,5 +1,6 @@
 package com.workshop.exchangerates.controller;
 
+import com.workshop.exchangerates.dto.FetchResponse;
 import com.workshop.exchangerates.model.ExchangeRate;
 import com.workshop.exchangerates.service.ExchangeRateService;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,13 @@ public class ExchangeRateController {
     }
 
     @PostMapping("/fetch/{baseCurrency}")
-    public ResponseEntity<String> fetchRates(@PathVariable String baseCurrency) {
+    public ResponseEntity<FetchResponse> fetchRates(@PathVariable String baseCurrency) {
         exchangeRateService.fetchAndStoreRates(baseCurrency);
-        return ResponseEntity.ok("Exchange rates fetch initiated for " + baseCurrency);
+        FetchResponse response = new FetchResponse(
+            "Exchange rates fetch initiated",
+            baseCurrency,
+            "success"
+        );
+        return ResponseEntity.ok(response);
     }
 }

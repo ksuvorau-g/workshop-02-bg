@@ -91,11 +91,58 @@ http://localhost:8080
 
 ## Development
 
+### Using Makefile
+
+A Makefile is provided with convenient shortcuts for common development tasks:
+
+```bash
+# Show all available commands
+make help
+
+# Start services (PostgreSQL + Application)
+make up
+
+# Stop and remove all services
+make down
+
+# View logs
+make logs
+
+# List running containers
+make ps
+
+# Open database shell
+make db-shell
+
+# Open application shell
+make app-shell
+```
+
 ### Running Tests
 
+Run tests using Maven directly:
 ```bash
 mvn test
 ```
+
+Or use the Makefile targets for containerized test execution:
+
+```bash
+# Run tests with code coverage
+make coverage
+
+# Generate HTML coverage report
+make coverage-html
+```
+
+The coverage reports are generated using JaCoCo and will be available at:
+- **Console report**: Displayed in terminal after running `make coverage`
+- **HTML report**: `target/site/jacoco/index.html` (after running `make coverage-html`)
+
+**Note for Windows users:**
+- Make sure you have `make` installed (e.g., via Chocolatey: `choco install make`)
+- To view HTML report on Windows: `start target\site\jacoco\index.html`
+- If tests require database access, start services first: `make up`
 
 ### Database Migrations
 

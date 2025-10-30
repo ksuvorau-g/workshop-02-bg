@@ -39,8 +39,8 @@ ps:
 restart: down up
 
 db-shell:
-	# Non-interactive (-T) so it works from CI and different shells
-	$(DC_CMD) exec -T postgres psql -U postgres -d exchangerates
+	# Interactive shell for PostgreSQL. Requires services to be running (make up).
+	$(DC_CMD) exec -it postgres psql -U postgres -d exchangerates
 
 app-shell:
 	# Interactive shell for the app service. Use from a terminal that supports TTY.
@@ -71,7 +71,7 @@ coverage-html:
 		-v $(PWD):/app \
 		-w /app \
 		maven:3.9-eclipse-temurin-17-alpine \
-		mvn test
+		sh -c "mvn test && mvn jacoco:report"
 	@echo ""
 	@echo "=========================================="
 	@echo "HTML coverage report generated successfully!"
